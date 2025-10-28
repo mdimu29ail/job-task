@@ -18,11 +18,14 @@ export default function AddTopicForm() {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/topics', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, description }),
-      });
+      const res = await fetch(
+        'https://job-task-git-main-md-imus-projects.vercel.app/api/topics',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, description }),
+        }
+      );
 
       if (res.ok) {
         toast.success('Topic added successfully!');

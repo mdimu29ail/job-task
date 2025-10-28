@@ -10,9 +10,12 @@ export default function RemoveBtn({ id }) {
     if (!confirm('Are you sure you want to delete this topic?')) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
-        method: 'DELETE',
-      });
+      const res = await fetch(
+        `https://job-task-git-main-md-imus-projects.vercel.app//api/topics/${id}`,
+        {
+          method: 'DELETE',
+        }
+      );
 
       if (res.ok) router.refresh();
     } catch (error) {
