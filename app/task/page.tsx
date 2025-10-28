@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '../../libs/supabase-client';
-import TaskManager from '../../components/TaskManage.tsx';
+import TaskManager from '../../components/TaskManage';
 // import TaskManager from '../../components/TaskManage';
 // import { supabase } from '../../lib/supabase-client';
 
