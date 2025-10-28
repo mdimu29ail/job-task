@@ -33,7 +33,7 @@ export default function Navbar() {
   if (!mounted) return null; // prevent hydration issues
 
   return (
-    <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+    <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center sticky top-0">
       {/* Left: Logo */}
       <div className="text-xl font-bold text-blue-600">
         <Link href="/">MyApp</Link>
@@ -48,7 +48,7 @@ export default function Navbar() {
           About
         </Link>
         <Link href="/task" className="hover:text-blue-600">
-          Task
+          Task Real Time
         </Link>
         {session && (
           <Link href="/dashboard" className="hover:text-blue-600">
