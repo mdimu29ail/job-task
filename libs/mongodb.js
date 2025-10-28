@@ -1,11 +1,18 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const connectMongoDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("Connected to MongoDB.");
+    if (mongoose.connection.readyState >= 1) {
+      return;
+    }
+
+    await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: 'nextjs_topics',
+    });
+
+    console.log('✅ MongoDB connected');
   } catch (error) {
-    console.log(error);
+    console.error('❌ MongoDB connection error:', error);
   }
 };
 
