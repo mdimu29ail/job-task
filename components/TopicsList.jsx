@@ -2,19 +2,43 @@ import Link from 'next/link';
 import RemoveBtn from './RemoveBtn';
 import { HiPencilAlt } from 'react-icons/hi';
 
+// const getTopics = async () => {
+//   try {
+//     const res = await fetch(
+//       'https://job-task-git-main-md-imus-projects.vercel.app/api/topics',
+//       {
+//         cache: 'no-store',
+//       }
+//     );
+
+//     if (!res.ok) throw new Error('Failed to fetch topics');
+
+//     const data = await res.json();
+//     return Array.isArray(data) ? data : data.topics || [];
+//   } catch (error) {
+//     console.error('Error loading topics:', error);
+//     return [];
+//   }
+// };
 const getTopics = async () => {
   try {
     const res = await fetch(
-      'https://job-task-git-main-md-imus-projects.vercel.app//api/topics',
-      {
-        cache: 'no-store',
-      }
+      'https://job-task-git-main-md-imus-projects.vercel.app/api/topics',
+      { cache: 'no-store' }
     );
 
-    if (!res.ok) throw new Error('Failed to fetch topics');
+    if (!res.ok) {
+      throw new Error(`Failed to fetch topics: ${res.statusText}`);
+    }
 
     const data = await res.json();
-    return Array.isArray(data) ? data : data.topics || [];
+
+    // ✅ Handle both formats automatically
+    if (Array.isArray(data)) return data;
+    if (data && Array.isArray(data.topics)) return data.topics;
+
+    console.warn('Unexpected API response format:', data);
+    return [];
   } catch (error) {
     console.error('Error loading topics:', error);
     return [];
