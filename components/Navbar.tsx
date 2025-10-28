@@ -66,9 +66,23 @@ export default function Navbar() {
       <div className="flex items-center gap-3">
         {session ? (
           <>
-            <span>{session.user.email}</span>
+            {/* Profile Image */}
+            {session.user?.image && (
+              <img
+                src={session.user.image}
+                alt={session.user.name || 'User'}
+                className="w-10 h-10 rounded-full border-2 border-gray-300"
+              />
+            )}
+
+            {/* User Name */}
+            <span className="font-medium text-gray-800">
+              {session.user?.name || 'User'}
+            </span>
+
+            {/* Logout Button */}
             <button
-              onClick={logout}
+              onClick={() => signOut()}
               className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
             >
               Logout
