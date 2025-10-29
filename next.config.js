@@ -1,15 +1,20 @@
-// next.config.js
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  turbopack: {
+    root: 'C:\\Users\\MD Imu\\Desktop\\jobTask',
+  },
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
+        hostname: '**', // allow all HTTPS hosts
       },
       {
-        protocol: 'https',
-        hostname: 'ahlryolxsxvzqvkrsyph.supabase.co',
+        protocol: 'http',
+        hostname: '**', // allow all HTTP hosts (optional)
       },
     ],
   },
 };
+
+module.exports = nextConfig;

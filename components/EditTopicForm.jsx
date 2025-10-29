@@ -13,16 +13,13 @@ export default function EditTopicForm({ id, title, description }) {
     e.preventDefault();
 
     try {
-      const res = await fetch(
-        `https://job-task-git-main-md-imus-projects.vercel.app//api/topics/${id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify({ newTitle, newDescription }),
-        }
-      );
+      const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({ newTitle, newDescription }),
+      });
 
       if (!res.ok) {
         toast.error('Failed to update topic');

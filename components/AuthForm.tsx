@@ -170,12 +170,17 @@ export default function AuthForm() {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: window.location.origin },
+        options: {
+          redirectTo: process.env.NEXT_PUBLIC_BASE_URL,
+        },
       });
+
       if (error) throw error;
       toast.loading('Redirecting to Google…');
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (err) {
+      console.error('Google sign-in error:', err);
+      toast.error('Failed to sign in with Google');
+    } finally {
       setLoading(false);
     }
   };

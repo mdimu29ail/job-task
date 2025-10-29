@@ -1,31 +1,27 @@
 'use client';
 
-import { HiTrash } from 'react-icons/hi';
+import { HiOutlineTrash } from 'react-icons/hi';
 import { useRouter } from 'next/navigation';
 
 export default function RemoveBtn({ id }) {
   const router = useRouter();
+  const removeTopic = async () => {
+    const confirmed = confirm('Are you sure?');
 
-  const handleRemove = async () => {
-    if (!confirm('Are you sure you want to delete this topic?')) return;
+    if (confirmed) {
+      const res = await fetch(`http://localhost:3000/api/topics?id=${id}`, {
+        method: 'DELETE',
+      });
 
-    try {
-      const res = await fetch(
-        `https://job-task-git-main-md-imus-projects.vercel.app//api/topics/${id}`,
-        {
-          method: 'DELETE',
-        }
-      );
-
-      if (res.ok) router.refresh();
-    } catch (error) {
-      console.error('Error deleting topic:', error);
+      if (res.ok) {
+        router.refresh();
+      }
     }
   };
 
   return (
-    <button onClick={handleRemove} className="text-red-500 hover:text-red-700">
-      <HiTrash size={24} />
+    <button onClick={removeTopic} className="text-red-400">
+      <HiOutlineTrash size={24} />
     </button>
   );
 }

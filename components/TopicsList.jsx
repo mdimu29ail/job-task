@@ -1,57 +1,61 @@
-import Link from 'next/link';
-import RemoveBtn from './RemoveBtn';
-import { HiPencilAlt } from 'react-icons/hi';
+// import Link from 'next/link';
+// import RemoveBtn from './RemoveBtn';
+// import { HiPencilAlt } from 'react-icons/hi';
 
 // const getTopics = async () => {
 //   try {
 //     const res = await fetch(
-//       'https://job-task-git-main-md-imus-projects.vercel.app/api/topics',
+//       'http://localhost:3000/api/topics',
 //       {
 //         cache: 'no-store',
 //       }
 //     );
 
-//     if (!res.ok) throw new Error('Failed to fetch topics');
+//     if (!res.ok) {
+//       throw new Error('Failed to fetch topics');
+//     }
 
-//     const data = await res.json();
-//     return Array.isArray(data) ? data : data.topics || [];
+//     return res.json();
 //   } catch (error) {
-//     console.error('Error loading topics:', error);
-//     return [];
+//     console.log('Error loading topics: ', error);
 //   }
 // };
-const getTopics = async () => {
-  try {
-    const res = await fetch(
-      'https://job-task-git-main-md-imus-projects.vercel.app/api/topics',
-      { cache: 'no-store' }
-    );
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch topics: ${res.statusText}`);
-    }
+// export default async function TopicsList() {
+//   const { topics } = await getTopics();
 
-    const data = await res.json();
+//   return (
+//     <>
+//       {topics.map(t => (
+//         <div
+//           key={t._id}
+//           className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
+//         >
+//           <div>
+//             <h2 className="font-bold text-2xl">{t.title}</h2>
+//             <div>{t.description}</div>
+//           </div>
 
-    // ✅ Handle both formats automatically
-    if (Array.isArray(data)) return data;
-    if (data && Array.isArray(data.topics)) return data.topics;
+//           <div className="flex gap-2">
+//             <RemoveBtn id={t._id} />
+//             <Link href={`/editTopic/${t._id}`}>
+//               <HiPencilAlt size={24} />
+//             </Link>
+//           </div>
+//         </div>
+//       ))}
+//     </>
+//   );
+// }
 
-    console.warn('Unexpected API response format:', data);
-    return [];
-  } catch (error) {
-    console.error('Error loading topics:', error);
-    return [];
-  }
-};
+// components/TopicsList.jsx
+import Link from 'next/link';
+import RemoveBtn from './RemoveBtn';
+import { HiPencilAlt } from 'react-icons/hi';
 
-export default async function TopicsList() {
-  const topics = await getTopics();
-
-  if (!Array.isArray(topics) || topics.length === 0) {
-    return (
-      <div className="text-center text-gray-500 mt-5">No topics found.</div>
-    );
+export default function TopicsList({ topics }) {
+  if (!topics || !topics.length) {
+    return <p className="text-center mt-5 text-red-500">No topics found.</p>;
   }
 
   return (
@@ -59,20 +63,21 @@ export default async function TopicsList() {
       {topics.map(t => (
         <div
           key={t._id}
-          className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start rounded-lg shadow-sm hover:shadow-md transition-shadow"
+          className="p-4 border border-slate-300 my-3 flex justify-between items-start"
         >
           <div>
             <h2 className="font-bold text-2xl">{t.title}</h2>
-            <p className="text-gray-600">{t.description}</p>
+            <p>{t.description}</p>
           </div>
 
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2">
             <RemoveBtn id={t._id} />
+
             <Link
               href={`/editTopic/${t._id}`}
-              className="text-blue-500 hover:text-blue-700"
+              className="text-blue-600 flex items-center gap-1"
             >
-              <HiPencilAlt size={24} />
+              <HiPencilAlt size={24} /> Edit
             </Link>
           </div>
         </div>
